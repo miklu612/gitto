@@ -26,7 +26,6 @@ local function place_sign_appended(line, file)
         end
     end
     if buffer_exists == false then
-        print("Couldn't find " .. file)
         return
     end
     local cmd =
