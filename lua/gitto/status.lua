@@ -5,12 +5,10 @@ local gitto_status = {}
 -- @arg {string} message
 -- @return {(modified_files:string[], untracked_files:string[])}
 function parse_status_message(message)
-
     local status = {
         modified_files = {},
         untracked_files = {},
     }
-
     for line in message:gmatch("[^r\r\n]+") do
         if line:sub(1, 2) == " M" then
             table.insert(status.modified_files, line:sub(4))
@@ -18,9 +16,7 @@ function parse_status_message(message)
             table.insert(status.untracked_files, line:sub(4))
         end
     end
-
     return status
-
 end
 
 

@@ -1,6 +1,7 @@
 local gitto = {
     status = require("gitto.status").status,
-    diff   = require("gitto.diff").diff
+    diff   = require("gitto.diff").diff,
+    sign   = require("gitto.sign")
 }
 
 
@@ -15,6 +16,7 @@ function gitto.setup(opts)
         gitto.diff,
 	{}
     )
+    gitto.sign.setup()
 end
 
 return gitto
