@@ -14,15 +14,28 @@ function gitto_sign.setup()
     })
 end
 
-local function place_sign_appended(line)
-    local buffer_name = vim.api.nvim_buf_get_name(0)
+local function place_sign_appended(line, file)
+    local buffers = vim.api.nvim_list_bufs()
+    local buffer_exists = false
+    for _, buffer in pairs(buffers) do
+        local buffer_name = vim.api.nvim_buf_get_name(buffer)
+        local i = string.find(buffer_name, file, 1, true)
+        if i ~= nil then
+            buffer_exists = true
+            break
+        end
+    end
+    if buffer_exists == false then
+        print("Couldn't find " .. file)
+        return
+    end
     local cmd =
         "sign" ..
         " place " .. tostring(gitto_sign.current_index) ..
         " line=" .. tostring(line) ..
         " group=" .. gitto_sign.group_name ..
         " name=gitto_appended" ..
-        " file=" .. buffer_name
+        " file=" .. file
     vim.cmd(cmd)
     gitto_sign.current_index = gitto_sign.current_index + 1
 end
@@ -43,6 +56,17 @@ function gitto_sign.update()
         if string.sub(line, 1, 4) ~= "diff" then
             error("Expected diff in line: " .. line)
         end
+
+        -- Get the filename
+        local full_path = string.match(line, "a/[%w/%.]*")
+        local path_iter = string.gmatch(full_path, "/[%w%.]*")
+        local file = ""
+        for path in path_iter do
+            file = file .. path
+        end
+        file = file.sub(file, 2)
+
+
         index = index + 1
 
         line = lines[index]
@@ -83,7 +107,7 @@ function gitto_sign.update()
             while child_index < amount do
                 line = lines[index]
                 if string.sub(line, 1, 1) == "+" then
-                    place_sign_appended(child_index + offset)
+                    place_sign_appended(child_index + offset, file)
                 elseif string.sub(line, 1, 1) == "-" then
                     child_index = child_index - 1
                 end
