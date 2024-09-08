@@ -57,8 +57,8 @@ function gitto_sign.update()
         end
 
         -- Get the filename
-        local full_path = string.match(line, "a/[%w/%.]*")
-        local path_iter = string.gmatch(full_path, "/[%w%.]*")
+        local full_path = string.match(line, "a/[%w/%._]*")
+        local path_iter = string.gmatch(full_path, "/[%w%._]*")
         local file = ""
         for path in path_iter do
             file = file .. path
