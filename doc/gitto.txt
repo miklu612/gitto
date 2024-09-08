@@ -1,0 +1,21 @@
+*Gitto*
+==============================================================================
+
+Gitto is a simple Git integration plugin for Neovim.
+
+
+*GittoStatus*
+==============================================================================
+
+|GittoStatus| shows the current git status. This feature will be rewritten in
+the future, so treat it as deprecated.
+
+
+*GittoDiff*
+==============================================================================
+
+|GittoDiff| shows the current git diff. This feature will be rewritten in the
+future, so treat it as deprecated.
+
+
+ vim:tw=78:ft=help:noet:norl:
