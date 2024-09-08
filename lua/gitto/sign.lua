@@ -46,6 +46,13 @@ end
 
 function gitto_sign.update()
     clear_signs()
+
+    local prefix = vim.system({"git", "rev-parse", "--show-toplevel"}):wait().stdout
+    if prefix == nil then
+        error("Couldn't get toplevel")
+    end
+    prefix = prefix:match("/[%w/%._]*")
+
     local raw_diff = vim.system({"git", "--no-pager", "diff"}):wait().stdout
     local lines = gitto_util.split_lines(raw_diff)
     local index = 1
@@ -86,6 +93,7 @@ function gitto_sign.update()
         end
 
         local getting_diffs = true
+        local new_path = prefix .. "/" .. file
         while getting_diffs do
             index = index + 1
             line = lines[index]
@@ -106,7 +114,7 @@ function gitto_sign.update()
             while child_index < amount do
                 line = lines[index]
                 if string.sub(line, 1, 1) == "+" then
-                    place_sign_appended(child_index + offset, file)
+                    place_sign_appended(child_index + offset, new_path)
                 elseif string.sub(line, 1, 1) == "-" then
                     child_index = child_index - 1
                 end
