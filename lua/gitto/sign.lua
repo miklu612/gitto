@@ -64,8 +64,8 @@ function gitto_sign.update()
         end
 
         -- Get the filename
-        local full_path = string.match(line, "a/[%w/%._]*")
-        local path_iter = string.gmatch(full_path, "/[%w%._]*")
+        local full_path = string.match(line, "a/[%w/%._-]*")
+        local path_iter = string.gmatch(full_path, "/[%w%._-]*")
         local file = ""
         for path in path_iter do
             file = file .. path
@@ -115,6 +115,8 @@ function gitto_sign.update()
                 line = lines[index]
                 if string.sub(line, 1, 1) == "+" then
                     place_sign_appended(child_index + offset, new_path)
+                elseif line == "\\ No newline at end of file" then
+                    child_index = child_index - 1
                 elseif string.sub(line, 1, 1) == "-" then
                     child_index = child_index - 1
                 end

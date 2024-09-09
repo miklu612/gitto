@@ -19,7 +19,7 @@ local function gitto_command(args)
 end
 
 local function gitto_complete(lead, cmd, cursor)
-    local arg_iter = string.gmatch(cmd, "[%w/_%d]+")
+    local arg_iter = string.gmatch(cmd, "[%w/_%d-]+")
 
     -- This just consumes the 'Gitto' from the cmd, so we can check what
     -- command the user wants to use. Also for fun we will just check if it is
