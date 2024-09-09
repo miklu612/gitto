@@ -47,13 +47,13 @@ end
 function gitto_sign.update()
     clear_signs()
 
-    local prefix = vim.system({"git", "rev-parse", "--show-toplevel"}):wait().stdout
+    local prefix = vim.fn.system({"git", "rev-parse", "--show-toplevel"})
     if prefix == nil then
         error("Couldn't get toplevel")
     end
     prefix = prefix:match("/[%w/%._]*")
 
-    local raw_diff = vim.system({"git", "--no-pager", "diff"}):wait().stdout
+    local raw_diff = vim.fn.system({"git", "--no-pager", "diff"})
     local lines = gitto_util.split_lines(raw_diff)
     local index = 1
     while index + 1 < #lines do

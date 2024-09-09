@@ -11,7 +11,7 @@ local function gitto_command(args)
         table.remove(files, 1)
 
         for _, file in pairs(files) do
-            vim.system({"git", "stage", file}):wait()
+            vim.fn.system({"git", "stage", file})
         end
 
         vim.print(args)

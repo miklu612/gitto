@@ -39,9 +39,8 @@ end
 -- Gets the current git status and prints it as a notification using `vim.notify`
 -- @return {void}
 function gitto_status.status()
-    local output = vim.system({"git","status","--short"}):wait()
-    local stdout = output.stdout
-    local status = form_message(stdout)
+    local output = vim.fn.system({"git","status","--short"})
+    local status = form_message(output)
     vim.notify(status)
 end
 

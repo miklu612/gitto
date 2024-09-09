@@ -17,7 +17,7 @@ function gitto_util.split_lines(text)
 end
 
 function gitto_util.get_unstaged()
-    local unstaged_files = vim.system({"git", "status", "-s"}):wait().stdout
+    local unstaged_files = vim.fn.system({"git", "status", "-s"}).stdout
     local lines = gitto_util.split_lines(unstaged_files)
     local output = {}
     for _, line in pairs(lines) do

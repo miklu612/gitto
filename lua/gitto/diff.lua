@@ -14,8 +14,8 @@ end
 -- Replaces the current window's buffer with a diff page.
 -- @return {void}
 function gitto_diff.diff()
-    local output = vim.system({"git", "--no-pager", "diff"}):wait()
-    local lines = split_lines(output.stdout)
+    local output = vim.fn.system({"git", "--no-pager", "diff"})
+    local lines = split_lines(output)
     local buffer = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_lines(buffer, 0, -1, true, lines)
     vim.api.nvim_win_set_buf(0, buffer)
